@@ -28,11 +28,12 @@
     .brand p{margin:0;font-size:12px;color:var(--muted)}
 
     .nav a{color:var(--muted);text-decoration:none;margin-left:12px;font-weight:600;font-size:13px}
+
     .hero{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;margin-top:24px}
-    .hero-left h2{font-size:28px;line-height:1.1;margin:0 0 12px}
+    .hero-left h2{font-size:28px;line-height:1.2;margin:0 0 12px}
     .accent-word{background:linear-gradient(90deg,#6ee7b7,#60a5fa);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .lead{color:var(--muted);margin-bottom:16px;font-size:14px}
-    .cta-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .lead{color:var(--muted);margin-bottom:16px;font-size:14px;line-height:1.4}
+    .cta-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
     .btn{padding:10px 16px;border-radius:10px;font-weight:700;border:0;cursor:pointer;font-size:14px}
     .btn-primary{background:var(--accent);color:#05233b;box-shadow:0 8px 24px rgba(96,165,250,0.12)}
     .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
@@ -46,15 +47,16 @@
     .mock-phone{width:100%;border-radius:12px;overflow:hidden;background:var(--glass);border:1px solid var(--glass-2)}
     .mock-phone img{display:block;width:100%;height:auto;object-fit:cover}
 
-    .features{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:32px}
+    .features{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:32px}
     .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:16px;border-radius:12px;border:1px solid var(--glass-2)}
     .card h3{margin:6px 0 6px;font-size:15px}
-    .card p{margin:0;color:var(--muted);font-size:13px}
+    .card p{margin:0;color:var(--muted);font-size:13px;line-height:1.3}
 
-    .how{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px;align-items:flex-start}
-    .steps{display:flex;flex-direction:column;gap:10px}
+    .how{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px;align-items:flex-start}
+    .steps{display:flex;flex-direction:column;gap:12px}
     .step{display:flex;gap:8px;align-items:flex-start}
     .step .num{width:36px;height:36px;border-radius:8px;background:var(--card);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+
     .faq{margin-top:28px}
 
     footer{margin-top:40px;padding:24px;border-radius:12px;background:linear-gradient(180deg,rgba(0,0,0,0.16),transparent);display:flex;flex-direction:column;gap:12px;align-items:flex-start}
@@ -82,7 +84,7 @@
     .btn:active{transform:translateY(1px)}
     .card:hover{transform:translateY(-4px);transition:transform .28s ease}
 
-    .feature-img{width:100%;border-radius:12px;margin-top:8px;object-fit:cover;max-height:120px}
+    .feature-img{width:100%;border-radius:12px;margin-top:12px;object-fit:cover;max-height:140px}
   </style>
 </head>
 <body>
@@ -108,8 +110,8 @@
     <section class="hero">
       <div class="hero-left">
         <h2>Следи за своими оценками и рассчитывай итоговую <span class="accent-word">по‑курсу</span> — прямо в Telegram.</h2>
-        <p class="lead">GradeTrack — это простой и мощный бот для студентов ВШЭ: записывайте оценки, задавайте веса заданий и экзаменов, получайте уведомления и прогнозируйте итоговую оценку в реальном времени.</p>
-        <img src="https://picsum.photos/400/200?random=1" alt="Учебный процесс" class="feature-img">
+        <p class="lead">GradeTrack — простой бот для студентов ВШЭ: вводите оценки, задавайте веса, получайте уведомления и прогнозируйте итоговую оценку.</p>
+        <img src="https://images.unsplash.com/photo-1581091215366-1064c58c27e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzEwM3wwfDF8c2VhcmNofDEyfHxzdHVkZW50fGVufDB8fHx8MTY5NzA0MzM1Nw&ixlib=rb-4.0.3&q=80&w=400" alt="Студенты за учебой" class="feature-img">
 
         <div class="cta-row" id="cta">
           <a class="btn btn-primary" href="https://t.me/hsegrades_bot" target="_blank" rel="noopener">Открыть в Telegram</a>
@@ -125,26 +127,26 @@
 
       <div class="hero-right">
         <div class="mock-phone" role="img" aria-label="Скриншот бота">
-          <img src="https://picsum.photos/480/800?random=2" alt="Пример интерфейса бота">
+          <img src="https://images.unsplash.com/photo-1617196037035-5c236f5c9a97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=480" alt="Пример интерфейса бота">
         </div>
       </div>
     </section>
 
     <section id="features" class="features" aria-label="features">
       <div class="card">
-        <img src="https://picsum.photos/300/120?random=3" alt="Ввод оценок" class="feature-img">
+        <img src="https://images.unsplash.com/photo-1581092918367-fc1d6c7c7a8f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=300" alt="Ввод оценок" class="feature-img">
         <h3>Быстрый ввод оценок</h3>
-        <p>Добавляйте зачёты, домашние задания и экзамены в два клика — бот хранит историю и позволяет редактировать записи.</p>
+        <p>Добавляйте зачёты, домашние задания и экзамены за секунды, бот хранит историю и позволяет редактировать записи.</p>
       </div>
       <div class="card">
-        <img src="https://picsum.photos/300/120?random=4" alt="Расчёт итоговой" class="feature-img">
+        <img src="https://images.unsplash.com/photo-1581092918321-28c842c0e5e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=300" alt="Расчёт итоговой" class="feature-img">
         <h3>Точный расчёт итоговой</h3>
-        <p>Указывайте веса оценок, пороги и формулы — бот вычислит текущий и прогнозируемый итог автоматически.</p>
+        <p>Указывайте веса оценок, пороги и формулы — бот автоматически вычислит текущий и прогнозируемый итог.</p>
       </div>
       <div class="card">
-        <img src="https://picsum.photos/300/120?random=5" alt="Напоминания" class="feature-img">
+        <img src="https://images.unsplash.com/photo-1581092918390-1d7a1a4c3a8b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=300" alt="Напоминания" class="feature-img">
         <h3>Уведомления и дедлайны</h3>
-        <p>Бот напомнит о предстоящем сроке сдачи, изменениях в оценках и даст советы по повышению итоговой оценки.</p>
+        <p>Бот напомнит о сроках сдачи, изменениях в оценках и даст советы по повышению итоговой оценки.</p>
       </div>
     </section>
 
@@ -152,15 +154,15 @@
       <div>
         <h3>Как использовать</h3>
         <div class="steps">
-          <div class="step"><div class="num">1</div><div><b>Добавьте курс</b><div class="s-muted">Напишите название курса, укажите семестр и преподавателя.</div></div></div>
-          <div class="step"><div class="num">2</div><div><b>Внесите оценки</b><div class="s-muted">Добавляйте отдельные оценки с весами: дз, тесты, семинары, экзамен.</div></div></div>
-          <div class="step"><div class="num">3</div><div><b>Смотрите прогноз</b><div class="s-muted">Бот покажет текущую и прогнозируемую итоговую оценку и подскажет, какие оценки нужно получить.</div></div></div>
+          <div class="step"><div class="num">1</div><div><b>Добавьте курс</b><div class="s-muted">Название курса, семестр, преподаватель.</div></div></div>
+          <div class="step"><div class="num">2</div><div><b>Внесите оценки</b><div class="s-muted">Добавляйте оценки с весами: дз, тесты, семинары, экзамен.</div></div></div>
+          <div class="step"><div class="num">3</div><div><b>Смотрите прогноз</b><div class="s-muted">Бот покажет текущую и прогнозируемую итоговую оценку.</div></div></div>
         </div>
-        <img src="https://picsum.photos/400/200?random=6" alt="Прогноз оценок" class="feature-img">
+        <img src="https://images.unsplash.com/photo-1581091215331-77f6ef1b9f0e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" alt="Прогноз оценок" class="feature-img">
       </div>
       <div>
         <h3>Почему студенты ВШЭ выбирают GradeTrack</h3>
-        <p class="s-muted">Интеграция с привычным Telegram, минималистичный интерфейс, локализация под университетские форматы оценивания и гибкая система весов — всё это делает GradeTrack инструментом №1 для контроля успеваемости.</p>
+        <p class="s-muted">Интеграция с Telegram, минималистичный интерфейс, локализация под университетские форматы оценивания и гибкая система весов — всё это делает GradeTrack инструментом №1 для контроля успеваемости.</p>
 
         <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
           <div class="card" style="flex:1;min-width:140px"><b>Персональные цели</b><div class="s-muted">Ставьте целевую итоговую и получайте план действий.</div></div>
@@ -174,7 +176,7 @@
       <div style="margin-top:12px">
         <div class="card" style="margin-bottom:10px">
           <b>Это официальное приложение ВШЭ?</b>
-          <p class="s-muted">Нет. GradeTrack — независимый проект, созданный студентами для студентов. Рекомендуется проверять официальные ведомости.</p>
+          <p class="s-muted">Нет. GradeTrack — независимый проект, созданный студентами для студентов. Проверяйте официальные ведомости.</p>
         </div>
         <div class="card" style="margin-bottom:10px">
           <b>Как хранится моя информация?</b>
