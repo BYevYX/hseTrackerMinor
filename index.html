@@ -1,202 +1,362 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>GradeTrack — Удобный трекер оценок для студентов ВШЭ</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <meta name="description" content="Телеграм‑бот для студентов ВШЭ — отслеживайте оценки, просчитывайте итоговую по курсу и получайте напоминания. Удобно, быстро и в студенческом стиле." />
-  <style>
-    :root{
-      --bg1: #0f172a;
-      --accent: linear-gradient(135deg,#6ee7b7 0%,#60a5fa 50%,#a78bfa 100%);
-      --glass: rgba(255,255,255,0.06);
-      --card: rgba(255,255,255,0.03);
-      --muted: rgba(255,255,255,0.72);
-      --glass-2: rgba(255,255,255,0.04);
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;background:radial-gradient(1200px 600px at 10% 10%,rgba(96,165,250,0.08),transparent), linear-gradient(180deg,#071029 0%,#061226 100%);color:#e6eef8;min-height:100vh;-webkit-font-smoothing:antialiased}
-    .container{max-width:1100px;margin:0 auto;padding:24px 16px}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSE Grade | Твой цифровой зачетка в Telegram</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Animate On Scroll (AOS) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{width:48px;height:48px;border-radius:12px;background:var(--accent);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(99,102,241,0.12)}
-    .logo svg{width:28px;height:28px;filter:drop-shadow(0 4px 14px rgba(96,165,250,0.16))}
-    .brand h1{font-size:18px;margin:0;font-weight:800}
-    .brand p{margin:0;font-size:12px;color:var(--muted)}
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        hse: '#0f2d6b',
+                        hseLight: '#2358c9',
+                        darkBg: '#050505',
+                        glass: 'rgba(255, 255, 255, 0.05)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
-    .nav a{color:var(--muted);text-decoration:none;margin-left:12px;font-weight:600;font-size:13px}
+    <style>
+        body {
+            background-color: #050505;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
 
-    .hero{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center;margin-top:24px}
-    .hero-left h2{font-size:28px;line-height:1.2;margin:0 0 12px}
-    .accent-word{background:linear-gradient(90deg,#6ee7b7,#60a5fa);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .lead{color:var(--muted);margin-bottom:16px;font-size:14px;line-height:1.4}
-    .cta-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
-    .btn{padding:10px 16px;border-radius:10px;font-weight:700;border:0;cursor:pointer;font-size:14px}
-    .btn-primary{background:var(--accent);color:#05233b;box-shadow:0 8px 24px rgba(96,165,250,0.12)}
-    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+        /* Glassmorphism Utilities */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
 
-    .stats{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap}
-    .stat{background:var(--card);padding:10px 12px;border-radius:10px;min-width:100px}
-    .stat b{display:block;font-size:16px}
-    .s-muted{color:var(--muted);font-size:12px}
+        .text-gradient {
+            background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    .hero-right{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:16px;border-radius:16px;box-shadow:0 10px 30px rgba(2,6,23,0.6)}
-    .mock-phone{width:100%;border-radius:12px;overflow:hidden;background:var(--glass);border:1px solid var(--glass-2)}
-    .mock-phone img{display:block;width:100%;height:auto;object-fit:cover}
-
-    .features{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:32px}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:16px;border-radius:12px;border:1px solid var(--glass-2)}
-    .card h3{margin:6px 0 6px;font-size:15px}
-    .card p{margin:0;color:var(--muted);font-size:13px;line-height:1.3}
-
-    .how{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px;align-items:flex-start}
-    .steps{display:flex;flex-direction:column;gap:12px}
-    .step{display:flex;gap:8px;align-items:flex-start}
-    .step .num{width:36px;height:36px;border-radius:8px;background:var(--card);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
-
-    .faq{margin-top:28px}
-
-    footer{margin-top:40px;padding:24px;border-radius:12px;background:linear-gradient(180deg,rgba(0,0,0,0.16),transparent);display:flex;flex-direction:column;gap:12px;align-items:flex-start}
-    .social a{margin-left:12px;color:var(--muted);text-decoration:none;font-size:13px}
-
-    /* responsive */
-    @media (max-width:980px){
-      .hero{grid-template-columns:1fr}
-      .features{grid-template-columns:1fr 1fr}
-      .how{grid-template-columns:1fr}
-      .hero-left h2{font-size:24px}
-    }
-    @media (max-width:560px){
-      .features{grid-template-columns:1fr}
-      header{flex-direction:column;align-items:flex-start;gap:8px}
-      .brand h1{font-size:16px}
-      .hero-left h2{font-size:22px}
-      .lead{font-size:13px}
-      .card h3{font-size:14px}
-      .card p{font-size:12px}
-      .btn{font-size:13px;padding:8px 12px}
-      .step .num{width:32px;height:32px;font-size:12px}
-    }
-
-    .btn:active{transform:translateY(1px)}
-    .card:hover{transform:translateY(-4px);transition:transform .28s ease}
-
-    .feature-img{width:100%;border-radius:12px;margin-top:12px;object-fit:cover;max-height:140px}
-  </style>
+        .mockup-shadow {
+            box-shadow: 0 0 50px rgba(79, 172, 254, 0.2);
+        }
+    </style>
 </head>
-<body>
-  <div class="container">
-    <header>
-      <div class="brand">
-        <div class="logo" aria-hidden>
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="5" fill="white" opacity="0.06"></rect><path d="M7 13c1.5-2 3.5-3 6-3" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div>
-          <h1>GradeTrack</h1>
-          <p>Телеграм‑бот для студентов ВШЭ</p>
-        </div>
-      </div>
-      <nav class="nav">
-        <a href="#features">Функции</a>
-        <a href="#how">Как это работает</a>
-        <a href="#faq">Вопросы</a>
-        <a class="btn btn-ghost" href="#cta">Попробовать</a>
-      </nav>
-    </header>
+<body class="antialiased selection:bg-hseLight selection:text-white">
 
-    <section class="hero">
-      <div class="hero-left">
-        <h2>Следи за своими оценками и рассчитывай итоговую <span class="accent-word">по‑курсу</span> — прямо в Telegram.</h2>
-        <p class="lead">GradeTrack — простой бот для студентов ВШЭ: вводите оценки, задавайте веса, получайте уведомления и прогнозируйте итоговую оценку.</p>
-        <img src="https://images.unsplash.com/photo-1581091215366-1064c58c27e3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzEwM3wwfDF8c2VhcmNofDEyfHxzdHVkZW50fGVufDB8fHx8MTY5NzA0MzM1Nw&ixlib=rb-4.0.3&q=80&w=400" alt="Студенты за учебой" class="feature-img">
+    <!-- Background Blobs -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-hseLight opacity-20 rounded-full mix-blend-screen filter blur-3xl animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-purple-600 opacity-20 rounded-full mix-blend-screen filter blur-3xl animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-blue-400 opacity-10 rounded-full mix-blend-screen filter blur-3xl animate-blob animation-delay-4000"></div>
+    </div>
 
-        <div class="cta-row" id="cta">
-          <a class="btn btn-primary" href="https://t.me/hsegrades_bot" target="_blank" rel="noopener">Открыть в Telegram</a>
-          <a class="btn btn-ghost" href="#features">Узнать больше</a>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 left-0 border-b border-white/5 bg-darkBg/80 backdrop-blur-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-graduation-cap text-blue-400 text-xl"></i>
+                <span class="font-bold text-xl tracking-tight">HSE<span class="text-blue-400">Score</span></span>
+            </div>
+            <a href="#" class="hidden md:inline-flex items-center justify-center px-6 py-2 text-sm font-medium text-white transition-all bg-white/10 border border-white/10 rounded-full hover:bg-white/20 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                <i class="fa-brands fa-telegram mr-2"></i> Открыть WebApp
+            </a>
         </div>
+    </nav>
 
-        <div class="stats">
-          <div class="stat"><b>+1200</b><span class="s-muted">студентов ВШЭ</span></div>
-          <div class="stat"><b>Авто‑расчёт</b><span class="s-muted">точный подсчёт итоговой</span></div>
-          <div class="stat"><b>Уведомления</b><span class="s-muted">напоминания о дедлайнах</span></div>
-        </div>
-      </div>
+    <!-- Hero Section -->
+    <section class="relative z-10 pt-32 pb-20 lg:pt-48 lg:pb-32">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                
+                <!-- Text Content -->
+                <div class="lg:w-1/2" data-aos="fade-right" data-aos-duration="1000">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-semibold mb-6">
+                        <span class="w-2 h-2 rounded-full bg-blue-400 mr-2 animate-pulse"></span>
+                        Доступно для всех кампусов
+                    </div>
+                    <h1 class="text-5xl lg:text-7xl font-bold leading-tight mb-6">
+                        Управляй своим <br>
+                        <span class="text-gradient">GPA</span> без стресса
+                    </h1>
+                    <p class="text-gray-400 text-lg mb-8 leading-relaxed max-w-lg">
+                        Больше никаких таблиц в Excel. Вся успеваемость, формулы оценки и прогнозы автомата — прямо внутри Telegram. 
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-semibold transition-all shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 group">
+                            Запустить App
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                        <button class="px-8 py-4 glass-card hover:bg-white/10 text-white rounded-xl font-semibold transition-all">
+                            Как это работает?
+                        </button>
+                    </div>
+                    
+                    <!-- Trust stats -->
+                    <div class="mt-10 flex items-center gap-6 text-sm text-gray-500">
+                        <div class="flex -space-x-2">
+                            <div class="w-8 h-8 rounded-full bg-gray-700 border-2 border-black flex items-center justify-center text-xs text-white">AS</div>
+                            <div class="w-8 h-8 rounded-full bg-gray-600 border-2 border-black flex items-center justify-center text-xs text-white">EV</div>
+                            <div class="w-8 h-8 rounded-full bg-gray-500 border-2 border-black flex items-center justify-center text-xs text-white">+2k</div>
+                        </div>
+                        <p>студентов Вышки уже с нами</p>
+                    </div>
+                </div>
 
-      <div class="hero-right">
-        <div class="mock-phone" role="img" aria-label="Скриншот бота">
-          <img src="https://images.unsplash.com/photo-1617196037035-5c236f5c9a97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=480" alt="Пример интерфейса бота">
+                <!-- App Mockup Visualization -->
+                <div class="lg:w-1/2 w-full flex justify-center perspective-1000" data-aos="fade-left" data-aos-duration="1200">
+                    <div class="relative w-[320px] h-[640px] bg-darkBg border-[8px] border-gray-800 rounded-[3rem] mockup-shadow overflow-hidden transform rotate-y-12 rotate-z-2 transition-transform hover:rotate-0 duration-500">
+                        <!-- Top Bar -->
+                        <div class="absolute top-0 w-full h-8 bg-black z-20 flex justify-center">
+                            <div class="w-24 h-4 bg-gray-900 rounded-b-xl"></div>
+                        </div>
+                        
+                        <!-- Screen Content -->
+                        <div class="w-full h-full bg-gradient-to-b from-gray-900 to-black p-4 pt-12 overflow-hidden relative">
+                            <!-- Background glow in phone -->
+                            <div class="absolute top-20 right-[-50px] w-32 h-32 bg-blue-600 rounded-full filter blur-[60px] opacity-40"></div>
+
+                            <!-- Header -->
+                            <div class="flex justify-between items-center mb-6">
+                                <div>
+                                    <p class="text-xs text-gray-400">Привет, Студент 👋</p>
+                                    <h3 class="font-bold text-white">Твои предметы</h3>
+                                </div>
+                                <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-xs">A</div>
+                            </div>
+
+                            <!-- Grade Cards inside mockup -->
+                            <div class="space-y-3">
+                                <!-- Card 1 -->
+                                <div class="glass-card p-3 rounded-xl border border-white/10 flex justify-between items-center">
+                                    <div>
+                                        <div class="text-xs text-blue-300 mb-1">Микроэкономика</div>
+                                        <div class="flex gap-2 text-[10px] text-gray-400">
+                                            <span>Накоп: <b class="text-white">8.2</b></span>
+                                            <span>Формула: 0.6+0.4</span>
+                                        </div>
+                                    </div>
+                                    <div class="w-10 h-10 rounded-lg bg-green-500/20 text-green-400 flex items-center justify-center font-bold">
+                                        8
+                                    </div>
+                                </div>
+                                
+                                <!-- Card 2 -->
+                                <div class="glass-card p-3 rounded-xl border border-white/10 flex justify-between items-center">
+                                    <div>
+                                        <div class="text-xs text-blue-300 mb-1">Линейная алгебра</div>
+                                        <div class="flex gap-2 text-[10px] text-gray-400">
+                                            <span>Накоп: <b class="text-red-400">3.5</b></span>
+                                            <span>Нужен экз: >6</span>
+                                        </div>
+                                    </div>
+                                    <div class="w-10 h-10 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center font-bold">
+                                        4?
+                                    </div>
+                                </div>
+
+                                <!-- Calculator Simulation -->
+                                <div class="mt-6 bg-white/5 rounded-xl p-3">
+                                    <p class="text-[10px] text-gray-400 mb-2">Калькулятор итога</p>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-xs">Экзамен</span>
+                                        <span class="text-xs text-blue-400 font-bold">8</span>
+                                    </div>
+                                    <div class="w-full bg-gray-700 h-1 rounded-full mb-3">
+                                        <div class="bg-blue-500 h-1 rounded-full w-[80%]"></div>
+                                    </div>
+                                    <button class="w-full py-2 bg-blue-600 text-xs rounded-lg text-white font-medium">Рассчитать</button>
+                                </div>
+                            </div>
+
+                            <!-- Bottom Nav Mockup -->
+                            <div class="absolute bottom-4 left-4 right-4 h-14 glass-card rounded-2xl flex justify-around items-center text-gray-400">
+                                <i class="fa-solid fa-house text-blue-400"></i>
+                                <i class="fa-solid fa-calculator"></i>
+                                <i class="fa-solid fa-gear"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
-    <section id="features" class="features" aria-label="features">
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1581092918367-fc1d6c7c7a8f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=300" alt="Ввод оценок" class="feature-img">
-        <h3>Быстрый ввод оценок</h3>
-        <p>Добавляйте зачёты, домашние задания и экзамены за секунды, бот хранит историю и позволяет редактировать записи.</p>
-      </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1581092918321-28c842c0e5e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=300" alt="Расчёт итоговой" class="feature-img">
-        <h3>Точный расчёт итоговой</h3>
-        <p>Указывайте веса оценок, пороги и формулы — бот автоматически вычислит текущий и прогнозируемый итог.</p>
-      </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1581092918390-1d7a1a4c3a8b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=300" alt="Напоминания" class="feature-img">
-        <h3>Уведомления и дедлайны</h3>
-        <p>Бот напомнит о сроках сдачи, изменениях в оценках и даст советы по повышению итоговой оценки.</p>
-      </div>
+    <!-- Features Bento Grid -->
+    <section class="py-20 relative z-10 bg-black/50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-5xl font-bold text-center mb-16" data-aos="fade-up">
+                Всё для выживания <br><span class="text-gray-500">в сессию</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Feature 1: Calculator -->
+                <div class="md:col-span-2 glass-card p-8 rounded-3xl hover:bg-white/5 transition-colors border-white/5" data-aos="fade-up" data-aos-delay="0">
+                    <div class="flex justify-between items-start mb-8">
+                        <div>
+                            <div class="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-full flex items-center justify-center text-xl mb-4">
+                                <i class="fa-solid fa-calculator"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2">Умный калькулятор</h3>
+                            <p class="text-gray-400 text-sm md:text-base">Вводи желаемую оценку, а мы подставим формулу из ПУД (Программы Учебной Дисциплины) и скажем, на сколько нужно написать экзамен.</p>
+                        </div>
+                        <!-- Interactive mini element -->
+                        <div class="hidden md:block w-40 bg-black/40 rounded-xl p-4 border border-white/5">
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-gray-400">Накоп</span>
+                                <span class="text-white">0.6</span>
+                            </div>
+                            <div class="flex justify-between text-xs mb-3">
+                                <span class="text-gray-400">Экз</span>
+                                <span class="text-white">0.4</span>
+                            </div>
+                            <div class="text-center text-xl font-bold text-blue-400">Итог: 8</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 2: Tracking -->
+                <div class="glass-card p-8 rounded-3xl hover:bg-white/5 transition-colors border-white/5" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-12 h-12 bg-purple-500/20 text-purple-400 rounded-full flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Динамика</h3>
+                    <p class="text-gray-400 text-sm">Следи за изменениями среднего балла и местом в рейтинге в реальном времени.</p>
+                </div>
+
+                <!-- Feature 3: Notifications -->
+                <div class="glass-card p-8 rounded-3xl hover:bg-white/5 transition-colors border-white/5" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-12 h-12 bg-orange-500/20 text-orange-400 rounded-full flex items-center justify-center text-xl mb-4">
+                        <i class="fa-regular fa-bell"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Уведомления</h3>
+                    <p class="text-gray-400 text-sm">Узнавай об оценке раньше, чем обновишь страницу LMS. Моментальный пуш в Telegram.</p>
+                </div>
+
+                <!-- Feature 4: Simplicity -->
+                <div class="md:col-span-2 glass-card p-8 rounded-3xl hover:bg-white/5 transition-colors border-white/5 relative overflow-hidden group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="absolute right-0 bottom-0 w-64 h-64 bg-gradient-to-tl from-blue-600/20 to-transparent rounded-full translate-x-1/3 translate-y-1/3 blur-3xl group-hover:bg-blue-600/30 transition-all"></div>
+                    <div class="relative z-10 flex flex-col md:flex-row items-center justify-between">
+                        <div class="mb-6 md:mb-0">
+                            <h3 class="text-2xl font-bold mb-2">Без установки лишних приложений</h3>
+                            <p class="text-gray-400 text-sm md:text-base">Всё работает внутри Telegram Mini Apps. Быстро, безопасно и не занимает память телефона.</p>
+                        </div>
+                        <button class="px-6 py-3 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-colors">
+                            Попробовать
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section class="how" id="how">
-      <div>
-        <h3>Как использовать</h3>
-        <div class="steps">
-          <div class="step"><div class="num">1</div><div><b>Добавьте курс</b><div class="s-muted">Название курса, семестр, преподаватель.</div></div></div>
-          <div class="step"><div class="num">2</div><div><b>Внесите оценки</b><div class="s-muted">Добавляйте оценки с весами: дз, тесты, семинары, экзамен.</div></div></div>
-          <div class="step"><div class="num">3</div><div><b>Смотрите прогноз</b><div class="s-muted">Бот покажет текущую и прогнозируемую итоговую оценку.</div></div></div>
-        </div>
-        <img src="https://images.unsplash.com/photo-1581091215331-77f6ef1b9f0e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400" alt="Прогноз оценок" class="feature-img">
-      </div>
-      <div>
-        <h3>Почему студенты ВШЭ выбирают GradeTrack</h3>
-        <p class="s-muted">Интеграция с Telegram, минималистичный интерфейс, локализация под университетские форматы оценивания и гибкая система весов — всё это делает GradeTrack инструментом №1 для контроля успеваемости.</p>
+    <!-- How it works -->
+    <section class="py-20 relative z-10">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-16">Всего 3 шага к <span class="text-blue-400">контролю</span></h2>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12 relative">
+                <!-- Line connector (hidden on mobile) -->
+                <div class="hidden md:block absolute top-1/2 left-20 right-20 h-0.5 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent -z-10"></div>
 
-        <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
-          <div class="card" style="flex:1;min-width:140px"><b>Персональные цели</b><div class="s-muted">Ставьте целевую итоговую и получайте план действий.</div></div>
-          <div class="card" style="flex:1;min-width:140px"><b>Экспорт</b><div class="s-muted">Экспорт оценок в CSV для отчётов и портфолио.</div></div>
+                <!-- Step 1 -->
+                <div class="flex flex-col items-center text-center max-w-xs" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-16 h-16 rounded-2xl bg-darkBg border border-blue-500/50 flex items-center justify-center text-2xl font-bold text-blue-400 mb-4 shadow-[0_0_20px_rgba(59,130,246,0.3)]">1</div>
+                    <h4 class="text-lg font-bold mb-2">Запусти бота</h4>
+                    <p class="text-sm text-gray-500">Нажми Start в Telegram и открой мини-приложение.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="flex flex-col items-center text-center max-w-xs" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 rounded-2xl bg-darkBg border border-purple-500/50 flex items-center justify-center text-2xl font-bold text-purple-400 mb-4 shadow-[0_0_20px_rgba(168,85,247,0.3)]">2</div>
+                    <h4 class="text-lg font-bold mb-2">Выбери предметы</h4>
+                    <p class="text-sm text-gray-500">Добавь свои курсы и формулы оценивания вручную или из шаблонов.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="flex flex-col items-center text-center max-w-xs" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-16 h-16 rounded-2xl bg-darkBg border border-green-500/50 flex items-center justify-center text-2xl font-bold text-green-400 mb-4 shadow-[0_0_20px_rgba(34,197,94,0.3)]">3</div>
+                    <h4 class="text-lg font-bold mb-2">Вводи оценки</h4>
+                    <p class="text-sm text-gray-500">Получай мгновенный расчет текущей и итоговой оценки.</p>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
-    <section class="faq" id="faq">
-      <h3>Часто задаваемые вопросы</h3>
-      <div style="margin-top:12px">
-        <div class="card" style="margin-bottom:10px">
-          <b>Это официальное приложение ВШЭ?</b>
-          <p class="s-muted">Нет. GradeTrack — независимый проект, созданный студентами для студентов. Проверяйте официальные ведомости.</p>
+    <!-- Footer -->
+    <footer class="border-t border-white/5 bg-black py-12 relative z-10">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center bg-blue-900/10 p-8 rounded-3xl border border-blue-500/10">
+                <div class="mb-6 md:mb-0">
+                    <h2 class="text-2xl font-bold text-white mb-2">Готов учиться умнее?</h2>
+                    <p class="text-blue-200">Присоединяйся к тысячам студентов ВШЭ.</p>
+                </div>
+                <button class="px-8 py-4 bg-white text-blue-900 rounded-xl font-bold hover:scale-105 transition-transform">
+                    Запустить в Telegram
+                </button>
+            </div>
+            
+            <div class="mt-12 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
+                <p>&copy; 2023 HSE Score App. Не является официальным приложением НИУ ВШЭ.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition-colors">Поддержка</a>
+                    <a href="#" class="hover:text-white transition-colors">GitHub</a>
+                </div>
+            </div>
         </div>
-        <div class="card" style="margin-bottom:10px">
-          <b>Как хранится моя информация?</b>
-          <p class="s-muted">Данные хранятся локально в профиле бота — мы не публикуем ваши оценки. Возможность экспорта и удаления данных — в настройках.</p>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <div>
-        <strong>GradeTrack</strong>
-        <div class="s-muted" style="margin-top:6px">Телеграм‑бот для контроля успеваемости студентов ВШЭ</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-        <div class="social">
-          <a href="https://t.me/hsegrades_bot" target="_blank">Открыть бот</a>
-        </div>
-        <div class="s-muted">© 2026 GradeTrack — проект студентов</div>
-      </div>
     </footer>
-  </div>
+
+    <!-- AOS Script Initialization -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            offset: 100,
+            easing: 'ease-out-cubic',
+        });
+    </script>
 </body>
 </html>
