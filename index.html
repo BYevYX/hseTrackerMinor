@@ -18,7 +18,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Animate On Scroll (AOS) -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -35,14 +35,14 @@
                         hseLight: '#2358c9',
                         darkBg: '#050505',
                         glass: 'rgba(255, 255, 255, 0.05)',
-                        phoneBg: '#F3F4F6', // Добавлен светлый фон для телефона
+                        phoneBg: '#F3F4F6',
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                     },
                     animation: {
                         'blob': 'blob 7s infinite',
-                        'float': 'float 6s ease-in-out infinite', // Анимация плавания пузырьков
+                        'float': 'float 6s ease-in-out infinite',
                     },
                     keyframes: {
                         blob: {
@@ -132,7 +132,7 @@
         <div class="container mx-auto px-6">
             <div class="flex flex-col lg:flex-row items-center gap-16">
                 
-                <!-- Text Content (UNCHANGED) -->
+                <!-- Text Content -->
                 <div class="lg:w-1/2" data-aos="fade-right" data-aos-duration="1000">
                     <div class="inline-flex items-center px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-semibold mb-6">
                         <span class="w-2 h-2 rounded-full bg-blue-400 mr-2 animate-pulse"></span>
@@ -166,7 +166,7 @@
                     </div>
                 </div>
 
-                <!-- App Mockup Visualization (REPLACED WITH NEW DESIGN) -->
+                <!-- App Mockup Visualization -->
                 <div class="lg:w-1/2 w-full flex justify-center perspective-1000" data-aos="fade-left" data-aos-duration="1200">
                     <!-- Phone Shell -->
                     <div class="relative w-[340px] h-[700px] bg-darkBg border-[8px] border-gray-800 rounded-[3.5rem] mockup-shadow overflow-hidden transform rotate-y-12 rotate-z-2 transition-transform hover:rotate-0 duration-500">
@@ -175,7 +175,7 @@
                             <div class="w-28 h-5 bg-gray-900 rounded-b-xl"></div>
                         </div>
                         
-                        <!-- Screen Content (Light Theme Reconstruction) -->
+                        <!-- Screen Content (Light Theme) -->
                         <div class="w-full h-full bg-[#f2f2f4] flex flex-col font-sans relative">
                             
                             <!-- Header (App) -->
@@ -183,7 +183,7 @@
                                 <div class="w-full flex justify-between items-center mb-4 text-gray-800">
                                     <i class="fa-solid fa-chevron-left text-xl cursor-pointer"></i>
                                     <h3 class="font-semibold text-lg tracking-wide">hse tracker</h3>
-                                    <div class="w-5"></div> <!-- Spacer -->
+                                    <div class="w-5"></div>
                                 </div>
                                 
                                 <!-- Toggle Switch -->
@@ -201,47 +201,62 @@
                                 <!-- Inner Container Background -->
                                 <div class="absolute inset-x-3 bottom-24 top-2 bg-[#f6f7f9] rounded-[2.5rem] border border-white shadow-inner"></div>
 
-                                <!-- BUBBLES -->
+                                <!-- BUBBLE GROUPS (Div wrapper for Bubble + Text beneath) -->
                                 
-                                <!-- 9.2 -->
-                                <div class="absolute top-8 left-8 w-28 h-28 bg-white rounded-full bubble-shadow flex flex-col items-center justify-center animate-float" style="animation-delay: 0s;">
-                                    <span class="text-4xl font-bold text-gray-800">9.2</span>
-                                    <span class="text-[10px] text-gray-400 mt-1">UX-Design</span>
+                                <!-- 1. UX-Design (Top Left) -->
+                                <div class="absolute top-6 left-6 flex flex-col items-center gap-2 animate-float z-10" style="animation-delay: 0s;">
+                                    <div class="w-28 h-28 bg-white rounded-full bubble-shadow flex items-center justify-center">
+                                        <span class="text-4xl font-bold text-gray-800">9.2</span>
+                                    </div>
+                                    <span class="text-[10px] text-gray-400 font-medium tracking-wide">UX-Design</span>
                                 </div>
 
-                                <!-- 7.1 -->
-                                <div class="absolute top-24 right-6 w-24 h-24 bg-white rounded-full bubble-shadow flex flex-col items-center justify-center animate-float" style="animation-delay: 1s;">
-                                    <span class="text-3xl font-bold text-gray-800">7.1</span>
-                                    <span class="text-[9px] text-gray-400 mt-1 max-w-[60px] text-center leading-tight">История России</span>
+                                <!-- 2. History (Top Right) -->
+                                <div class="absolute top-16 right-4 flex flex-col items-center gap-2 animate-float z-0" style="animation-delay: 1.5s;">
+                                    <div class="w-24 h-24 bg-white rounded-full bubble-shadow flex items-center justify-center">
+                                        <span class="text-3xl font-bold text-gray-800">7.1</span>
+                                    </div>
+                                    <span class="text-[10px] text-gray-400 font-medium">История</span>
                                 </div>
 
-                                <!-- 5.2 -->
-                                <div class="absolute top-44 left-6 w-24 h-24 bg-white rounded-full bubble-shadow flex flex-col items-center justify-center animate-float" style="animation-delay: 0.5s;">
-                                    <span class="text-3xl font-bold text-gray-800">5.2</span>
-                                    <span class="text-[10px] text-gray-400 mt-1">Python</span>
+                                <!-- 3. Python (Middle Left) -->
+                                <div class="absolute top-48 left-4 flex flex-col items-center gap-2 animate-float z-20" style="animation-delay: 0.5s;">
+                                    <div class="w-24 h-24 bg-white rounded-full bubble-shadow flex items-center justify-center">
+                                        <span class="text-3xl font-bold text-gray-800">5.2</span>
+                                    </div>
+                                    <span class="text-[10px] text-gray-400 font-medium">Python</span>
                                 </div>
 
-                                <!-- 3.1 -->
-                                <div class="absolute top-[16rem] left-[8.5rem] w-16 h-16 bg-white rounded-full bubble-shadow flex flex-col items-center justify-center z-10 animate-float" style="animation-delay: 1.5s;">
-                                    <span class="text-xl font-bold text-gray-800">3.1</span>
-                                </div>
-                                <span class="absolute top-[20.5rem] left-[7.5rem] text-[9px] text-gray-400 z-0">Эволюционный дизайн</span>
-
-                                <!-- 2.0 -->
-                                <div class="absolute top-[21rem] left-12 w-16 h-16 bg-white rounded-full bubble-shadow flex flex-col items-center justify-center animate-float" style="animation-delay: 2s;">
-                                    <span class="text-xl font-bold text-gray-800">2.0</span>
+                                <!-- 4. Design (Center Small) -->
+                                <div class="absolute top-[16rem] right-1/4 flex flex-col items-center gap-1.5 animate-float z-0" style="animation-delay: 2s;">
+                                    <div class="w-16 h-16 bg-white rounded-full bubble-shadow flex items-center justify-center">
+                                        <span class="text-xl font-bold text-gray-800">3.1</span>
+                                    </div>
+                                    <span class="text-[9px] text-gray-400 font-medium">Эвол. дизайн</span>
                                 </div>
 
-                                <!-- 6.1 -->
-                                <div class="absolute top-[22rem] right-8 w-24 h-24 bg-white rounded-full bubble-shadow flex flex-col items-center justify-center animate-float" style="animation-delay: 1.2s;">
-                                    <span class="text-3xl font-bold text-gray-800">6.1</span>
-                                    <span class="absolute top-[28.5rem] right-4 text-[9px] text-gray-400 text-center w-28 leading-tight">Мат анализ</span>
+                                <!-- 5. Math (Middle Right Lower) -->
+                                <div class="absolute top-[22rem] right-6 flex flex-col items-center gap-2 animate-float z-10" style="animation-delay: 1s;">
+                                    <div class="w-24 h-24 bg-white rounded-full bubble-shadow flex items-center justify-center">
+                                        <span class="text-3xl font-bold text-gray-800">6.1</span>
+                                    </div>
+                                    <span class="text-[10px] text-gray-400 font-medium">Мат. анализ</span>
                                 </div>
 
-                                <!-- 8.0 -->
-                                <div class="absolute bottom-28 left-6 w-32 h-32 bg-white rounded-full bubble-shadow flex flex-col items-center justify-center animate-float" style="animation-delay: 0.2s;">
-                                    <span class="text-[2.7rem] font-bold text-gray-800">8.0</span>
-                                    <span class="text-[10px] text-gray-400 mt-1">Анализ данных</span>
+                                <!-- 6. Economics (Bottom Left Small) -->
+                                <div class="absolute bottom-40 left-12 flex flex-col items-center gap-1.5 animate-float z-0" style="animation-delay: 1.8s;">
+                                    <div class="w-16 h-16 bg-white rounded-full bubble-shadow flex items-center justify-center">
+                                        <span class="text-xl font-bold text-gray-800">2.0</span>
+                                    </div>
+                                    <span class="text-[9px] text-gray-400 font-medium">Экономика</span>
+                                </div>
+
+                                <!-- 7. Data (Bottom Main) -->
+                                <div class="absolute bottom-28 left-6 flex flex-col items-center gap-2 animate-float z-20" style="animation-delay: 0.2s;">
+                                    <div class="w-32 h-32 bg-white rounded-full bubble-shadow flex items-center justify-center">
+                                        <span class="text-[2.7rem] font-bold text-gray-800">8.0</span>
+                                    </div>
+                                    <span class="text-[10px] text-gray-400 font-medium">Data Analysis</span>
                                 </div>
 
                             </div>
@@ -263,7 +278,7 @@
         </div>
     </section>
 
-    <!-- Features Bento Grid (UNCHANGED) -->
+    <!-- Features Bento Grid -->
     <section class="py-20 relative z-10 bg-black/50">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl md:text-5xl font-bold text-center mb-16" data-aos="fade-up">
@@ -331,7 +346,7 @@
         </div>
     </section>
 
-    <!-- How it works (UNCHANGED) -->
+    <!-- How it works -->
     <section class="py-20 relative z-10">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl font-bold text-center mb-16">Всего 3 шага к <span class="text-blue-400">контролю</span></h2>
@@ -364,7 +379,7 @@
         </div>
     </section>
 
-    <!-- Footer (UNCHANGED) -->
+    <!-- Footer -->
     <footer class="border-t border-white/5 bg-black py-12 relative z-10">
         <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-center bg-blue-900/10 p-8 rounded-3xl border border-blue-500/10">
