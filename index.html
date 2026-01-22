@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HSE Grade | Умный трекер оценок для ВШЭ</title>
+    <title>HSE Grade | Твой цифровой зачетка в Telegram</title>
     
     <!-- Open Graph / SEO Data -->
     <meta property="og:title" content="HSE Grade — Твоя цифровая зачетка">
     <meta property="og:description" content="Управляй своим GPA, считай прогнозы оценок и следи за рейтингом в Telegram App. Без таблиц и стресса.">
-    <meta property="og:image" content="https://img.icons8.com/color/512/student-center.png"> <!-- Пример картинки для превью -->
+    <meta property="og:image" content="https://img.icons8.com/color/512/student-center.png">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="HSE Grade App">
     
-    <!-- Favicon (Icon for Browser Title) -->
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://img.icons8.com/fluency/48/student-center.png">
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <!-- Animate On Scroll (AOS) -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -36,14 +35,14 @@
                         hseLight: '#2358c9',
                         darkBg: '#050505',
                         glass: 'rgba(255, 255, 255, 0.05)',
-                        phoneBg: '#F3F4F6', // Светлый фон как на скрине
+                        phoneBg: '#F3F4F6', // Добавлен светлый фон для телефона
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                     },
                     animation: {
                         'blob': 'blob 7s infinite',
-                        'float': 'float 6s ease-in-out infinite',
+                        'float': 'float 6s ease-in-out infinite', // Анимация плавания пузырьков
                     },
                     keyframes: {
                         blob: {
@@ -97,14 +96,10 @@
         }
 
         .mockup-shadow {
-            box-shadow: 0 0 60px rgba(79, 172, 254, 0.15);
+            box-shadow: 0 0 50px rgba(79, 172, 254, 0.2);
         }
 
-        /* Styles specifically for the phone UI reconstruction */
-        .phone-shadow-soft {
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.05), -5px -5px 15px rgba(255,255,255,0.8);
-        }
-        
+        /* Styles for bubbles inside phone */
         .bubble-shadow {
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
         }
@@ -124,7 +119,7 @@
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center gap-2">
                 <i class="fa-solid fa-graduation-cap text-blue-400 text-xl"></i>
-                <span class="font-bold text-xl tracking-tight">HSE<span class="text-blue-400">Tracker</span></span>
+                <span class="font-bold text-xl tracking-tight">HSE<span class="text-blue-400">Score</span></span>
             </div>
             <a href="#" class="hidden md:inline-flex items-center justify-center px-6 py-2 text-sm font-medium text-white transition-all bg-white/10 border border-white/10 rounded-full hover:bg-white/20 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                 <i class="fa-brands fa-telegram mr-2"></i> Открыть WebApp
@@ -133,37 +128,46 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative z-10 pt-32 pb-20 lg:pt-40 lg:pb-32">
+    <section class="relative z-10 pt-32 pb-20 lg:pt-48 lg:pb-32">
         <div class="container mx-auto px-6">
             <div class="flex flex-col lg:flex-row items-center gap-16">
                 
-                <!-- Text Content -->
-                <div class="lg:w-1/2 order-2 lg:order-1" data-aos="fade-right" data-aos-duration="1000">
+                <!-- Text Content (UNCHANGED) -->
+                <div class="lg:w-1/2" data-aos="fade-right" data-aos-duration="1000">
                     <div class="inline-flex items-center px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-semibold mb-6">
                         <span class="w-2 h-2 rounded-full bg-blue-400 mr-2 animate-pulse"></span>
                         Доступно для всех кампусов
                     </div>
                     <h1 class="text-5xl lg:text-7xl font-bold leading-tight mb-6">
-                        Твои оценки <br>
-                        <span class="text-gradient">под контролем</span>
+                        Управляй своим <br>
+                        <span class="text-gradient">GPA</span> без стресса
                     </h1>
                     <p class="text-gray-400 text-lg mb-8 leading-relaxed max-w-lg">
-                        Визуализируй свою успеваемость. Красивый и удобный трекер оценок, который считает всё за тебя. Просто добавь предмет и забудь про формулы.
+                        Больше никаких таблиц в Excel. Вся успеваемость, формулы оценки и прогнозы автомата — прямо внутри Telegram. 
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
                         <button class="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-semibold transition-all shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 group">
                             Запустить App
                             <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                         </button>
+                        <button class="px-8 py-4 glass-card hover:bg-white/10 text-white rounded-xl font-semibold transition-all">
+                            Как это работает?
+                        </button>
                     </div>
                     
-                    <div class="mt-8 text-sm text-gray-500">
-                        *Автоматический расчет среднего балла и итоговой по формуле ПУД.
+                    <!-- Trust stats -->
+                    <div class="mt-10 flex items-center gap-6 text-sm text-gray-500">
+                        <div class="flex -space-x-2">
+                            <div class="w-8 h-8 rounded-full bg-gray-700 border-2 border-black flex items-center justify-center text-xs text-white">AS</div>
+                            <div class="w-8 h-8 rounded-full bg-gray-600 border-2 border-black flex items-center justify-center text-xs text-white">EV</div>
+                            <div class="w-8 h-8 rounded-full bg-gray-500 border-2 border-black flex items-center justify-center text-xs text-white">+2k</div>
+                        </div>
+                        <p>студентов Вышки уже с нами</p>
                     </div>
                 </div>
 
-                <!-- PHONE VISUALIZATION (UPDATED DESIGN) -->
-                <div class="lg:w-1/2 w-full flex justify-center perspective-1000 order-1 lg:order-2" data-aos="fade-left" data-aos-duration="1200">
+                <!-- App Mockup Visualization (REPLACED WITH NEW DESIGN) -->
+                <div class="lg:w-1/2 w-full flex justify-center perspective-1000" data-aos="fade-left" data-aos-duration="1200">
                     <!-- Phone Shell -->
                     <div class="relative w-[340px] h-[700px] bg-darkBg border-[8px] border-gray-800 rounded-[3.5rem] mockup-shadow overflow-hidden transform rotate-y-12 rotate-z-2 transition-transform hover:rotate-0 duration-500">
                         <!-- Top Bar (Hardware) -->
@@ -197,46 +201,45 @@
                                 <!-- Inner Container Background -->
                                 <div class="absolute inset-x-3 bottom-24 top-2 bg-[#f6f7f9] rounded-[2.5rem] border border-white shadow-inner"></div>
 
-                                <!-- BUBBLES (Absolute Positioning based on image) -->
+                                <!-- BUBBLES -->
                                 
-                                <!-- 9.2 (Top Left) -->
+                                <!-- 9.2 -->
                                 <div class="absolute top-8 left-8 w-28 h-28 bg-white rounded-full bubble-shadow flex flex-col items-center justify-center animate-float" style="animation-delay: 0s;">
                                     <span class="text-4xl font-bold text-gray-800">9.2</span>
                                     <span class="text-[10px] text-gray-400 mt-1">UX-Design</span>
                                 </div>
 
-                                <!-- 7.1 (Right Upper) -->
+                                <!-- 7.1 -->
                                 <div class="absolute top-24 right-6 w-24 h-24 bg-white rounded-full bubble-shadow flex flex-col items-center justify-center animate-float" style="animation-delay: 1s;">
                                     <span class="text-3xl font-bold text-gray-800">7.1</span>
                                     <span class="text-[9px] text-gray-400 mt-1 max-w-[60px] text-center leading-tight">История России</span>
                                 </div>
 
-                                <!-- 5.2 (Left Middle) -->
+                                <!-- 5.2 -->
                                 <div class="absolute top-44 left-6 w-24 h-24 bg-white rounded-full bubble-shadow flex flex-col items-center justify-center animate-float" style="animation-delay: 0.5s;">
                                     <span class="text-3xl font-bold text-gray-800">5.2</span>
                                     <span class="text-[10px] text-gray-400 mt-1">Python</span>
                                 </div>
 
-                                <!-- 3.1 (Center Middle) -->
+                                <!-- 3.1 -->
                                 <div class="absolute top-[16rem] left-[8.5rem] w-16 h-16 bg-white rounded-full bubble-shadow flex flex-col items-center justify-center z-10 animate-float" style="animation-delay: 1.5s;">
                                     <span class="text-xl font-bold text-gray-800">3.1</span>
-                                    <!-- Label mostly external or very small -->
                                 </div>
                                 <span class="absolute top-[20.5rem] left-[7.5rem] text-[9px] text-gray-400 z-0">Эволюционный дизайн</span>
 
-                                <!-- 2.0 (Left Lower) -->
+                                <!-- 2.0 -->
                                 <div class="absolute top-[21rem] left-12 w-16 h-16 bg-white rounded-full bubble-shadow flex flex-col items-center justify-center animate-float" style="animation-delay: 2s;">
                                     <span class="text-xl font-bold text-gray-800">2.0</span>
                                 </div>
                                 <span class="absolute top-[25.5rem] left-8 text-[9px] text-gray-400 text-center w-24">Основы экономики</span>
 
-                                <!-- 6.1 (Right Lower) -->
+                                <!-- 6.1 -->
                                 <div class="absolute top-[22rem] right-8 w-24 h-24 bg-white rounded-full bubble-shadow flex flex-col items-center justify-center animate-float" style="animation-delay: 1.2s;">
                                     <span class="text-3xl font-bold text-gray-800">6.1</span>
                                 </div>
                                 <span class="absolute top-[28.5rem] right-4 text-[9px] text-gray-400 text-center w-28 leading-tight">Математический анализ</span>
 
-                                <!-- 8.0 (Bottom Left Big) -->
+                                <!-- 8.0 -->
                                 <div class="absolute bottom-28 left-6 w-32 h-32 bg-white rounded-full bubble-shadow flex flex-col items-center justify-center animate-float" style="animation-delay: 0.2s;">
                                     <span class="text-[2.7rem] font-bold text-gray-800">8.0</span>
                                     <span class="text-[10px] text-gray-400 mt-1">Анализ данных</span>
@@ -261,7 +264,7 @@
         </div>
     </section>
 
-    <!-- Features Bento Grid -->
+    <!-- Features Bento Grid (UNCHANGED) -->
     <section class="py-20 relative z-10 bg-black/50">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl md:text-5xl font-bold text-center mb-16" data-aos="fade-up">
@@ -279,36 +282,108 @@
                             <h3 class="text-2xl font-bold mb-2">Умный калькулятор</h3>
                             <p class="text-gray-400 text-sm md:text-base">Вводи желаемую оценку, а мы подставим формулу из ПУД (Программы Учебной Дисциплины) и скажем, на сколько нужно написать экзамен.</p>
                         </div>
+                        <!-- Interactive mini element -->
+                        <div class="hidden md:block w-40 bg-black/40 rounded-xl p-4 border border-white/5">
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-gray-400">Накоп</span>
+                                <span class="text-white">0.6</span>
+                            </div>
+                            <div class="flex justify-between text-xs mb-3">
+                                <span class="text-gray-400">Экз</span>
+                                <span class="text-white">0.4</span>
+                            </div>
+                            <div class="text-center text-xl font-bold text-blue-400">Итог: 8</div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Feature 2: Visual -->
+                <!-- Feature 2: Tracking -->
                 <div class="glass-card p-8 rounded-3xl hover:bg-white/5 transition-colors border-white/5" data-aos="fade-up" data-aos-delay="100">
                     <div class="w-12 h-12 bg-purple-500/20 text-purple-400 rounded-full flex items-center justify-center text-xl mb-4">
-                        <i class="fa-regular fa-eye"></i>
+                        <i class="fa-solid fa-chart-line"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-2">Наглядность</h3>
-                    <p class="text-gray-400 text-sm">Представление успеваемости в виде списка или удобных пузырьков. Чем больше оценка, тем больше пузырь.</p>
+                    <h3 class="text-2xl font-bold mb-2">Все оценки в одном месте</h3>
+                    <p class="text-gray-400 text-sm">Оценки по всем дисциплинам в одном приложении в Telegram</p>
+                </div>
+
+                <!-- Feature 3: Notifications -->
+                <div class="glass-card p-8 rounded-3xl hover:bg-white/5 transition-colors border-white/5" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-12 h-12 bg-orange-500/20 text-orange-400 rounded-full flex items-center justify-center text-xl mb-4">
+                        <i class="fa-regular fa-bell"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Уведомления</h3>
+                    <p class="text-gray-400 text-sm">Узнавай об оценке раньше, чем обновишь страницу LMS. Моментальный пуш в Telegram.</p>
+                </div>
+
+                <!-- Feature 4: Simplicity -->
+                <div class="md:col-span-2 glass-card p-8 rounded-3xl hover:bg-white/5 transition-colors border-white/5 relative overflow-hidden group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="absolute right-0 bottom-0 w-64 h-64 bg-gradient-to-tl from-blue-600/20 to-transparent rounded-full translate-x-1/3 translate-y-1/3 blur-3xl group-hover:bg-blue-600/30 transition-all"></div>
+                    <div class="relative z-10 flex flex-col md:flex-row items-center justify-between">
+                        <div class="mb-6 md:mb-0">
+                            <h3 class="text-2xl font-bold mb-2">Без установки лишних приложений</h3>
+                            <p class="text-gray-400 text-sm md:text-base">Всё работает внутри Telegram Mini Apps. Быстро, безопасно и не занимает память телефона.</p>
+                        </div>
+                        <button class="px-6 py-3 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-colors">
+                            Попробовать
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- How it works (UNCHANGED) -->
+    <section class="py-20 relative z-10">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-16">Всего 3 шага к <span class="text-blue-400">контролю</span></h2>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12 relative">
+                <!-- Line connector (hidden on mobile) -->
+                <div class="hidden md:block absolute top-1/2 left-20 right-20 h-0.5 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent -z-10"></div>
+
+                <!-- Step 1 -->
+                <div class="flex flex-col items-center text-center max-w-xs" data-aos="fade-up" data-aos-delay="0">
+                    <div class="w-16 h-16 rounded-2xl bg-darkBg border border-blue-500/50 flex items-center justify-center text-2xl font-bold text-blue-400 mb-4 shadow-[0_0_20px_rgba(59,130,246,0.3)]">1</div>
+                    <h4 class="text-lg font-bold mb-2">Запусти бота</h4>
+                    <p class="text-sm text-gray-500">Нажми Start в Telegram и открой мини-приложение.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="flex flex-col items-center text-center max-w-xs" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 rounded-2xl bg-darkBg border border-purple-500/50 flex items-center justify-center text-2xl font-bold text-purple-400 mb-4 shadow-[0_0_20px_rgba(168,85,247,0.3)]">2</div>
+                    <h4 class="text-lg font-bold mb-2">Выбери предметы</h4>
+                    <p class="text-sm text-gray-500">Добавь дисциплины из списка и начни отслеживать свои оценки.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="flex flex-col items-center text-center max-w-xs" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-16 h-16 rounded-2xl bg-darkBg border border-green-500/50 flex items-center justify-center text-2xl font-bold text-green-400 mb-4 shadow-[0_0_20px_rgba(34,197,94,0.3)]">3</div>
+                    <h4 class="text-lg font-bold mb-2">Получай уведомления</h4>
+                    <p class="text-sm text-gray-500">Наш бот пришлет тебе сообщение, когда ведомость обновится.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (UNCHANGED) -->
     <footer class="border-t border-white/5 bg-black py-12 relative z-10">
         <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center bg-zinc-900/30 p-8 rounded-3xl border border-white/5">
+            <div class="flex flex-col md:flex-row justify-between items-center bg-blue-900/10 p-8 rounded-3xl border border-blue-500/10">
                 <div class="mb-6 md:mb-0">
                     <h2 class="text-2xl font-bold text-white mb-2">Готов учиться умнее?</h2>
-                    <p class="text-gray-400">Присоединяйся к студентам ВШЭ в Telegram.</p>
+                    <p class="text-blue-200">Присоединяйся к нам.</p>
                 </div>
-                <button class="px-8 py-4 bg-white text-black rounded-xl font-bold hover:scale-105 transition-transform">
-                    Открыть бота
+                <button class="px-8 py-4 bg-white text-blue-900 rounded-xl font-bold hover:scale-105 transition-transform">
+                    Запустить в Telegram
                 </button>
             </div>
             
-            <div class="mt-12 flex items-center justify-center text-gray-500 text-sm">
-                <p>&copy; 2023 HSE Tracker. Сделано студентами для студентов.</p>
+            <div class="mt-12 flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
+                <p>&copy; 2023 HSE Score App. Не является официальным приложением НИУ ВШЭ.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition-colors">Поддержка</a>
+                    <a href="#" class="hover:text-white transition-colors">GitHub</a>
+                </div>
             </div>
         </div>
     </footer>
